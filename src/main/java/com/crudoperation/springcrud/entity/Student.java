@@ -21,6 +21,9 @@ public class Student {
 
     private String city;
 
+    public Student() {
+    }
+
     public Student(String name, String email, int age, String city) {
         this.name = name;
         Email = email;

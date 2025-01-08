@@ -1,5 +1,6 @@
 package com.crudoperation.springcrud.servicesImpl;
 
+import com.crudoperation.springcrud.Exception.StudentNotFound;
 import com.crudoperation.springcrud.entity.Student;
 import com.crudoperation.springcrud.repo.StudentRepo;
 import com.crudoperation.springcrud.service.StudentService;
@@ -39,17 +40,16 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student updateStudent(Student student, int id) {
-        Student existingStudent = studentRepo.findById(id).orElse(null);
-        if(existingStudent!= null){
+        Student existingStudent = studentRepo.findById(id).orElseThrow(()-> new StudentNotFound("student not present in table..! id:" + id));
+
+
             existingStudent.setName(student.getName());
             existingStudent.setAge(student.getAge());
             existingStudent.setEmail(student.getEmail());
             existingStudent.setCity(student.getCity());
             Student updated = studentRepo.save(existingStudent);
             return updated;
-        }else {
-            throw new RuntimeException("student not present in ytable..!" + id);
-        }
+
 
     }
 
